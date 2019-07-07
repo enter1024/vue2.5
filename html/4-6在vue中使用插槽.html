@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="shortcut icon" type="" href="../img/favicon.ico"/>
+		<meta charset="UTF-8">
+		<title>4-6插槽</title>
+		<script type="text/javascript" src="../js/vue.js"></script>
+	</head>
+	<body>
+		<div id="root">
+			<child-component>
+				<!--<p slot="header">传递给子组件的内容header</p>-->
+				<p slot="footer">传递给子组件的内容footer</p>
+			</child-component>
+		</div>
+		
+		<script type="text/javascript">
+			Vue.component("child-component", {
+				template: `\
+				<div>\
+					<slot name="header"><p>默认头部内容header</p></slot>\
+					<p>子组件内容content</p>\
+					<slot name="footer"></slot>\
+				</div>`
+			})
+			
+			var vm = new Vue({
+				el: "#root",
+				methods: {
+					
+				}
+			})
+		</script>
+		
+		
+	</body>
+</html>

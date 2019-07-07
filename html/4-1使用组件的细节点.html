@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="../js/vue.js"></script>
+	</head>
+	<body>
+		
+		<!-- 
+			细节点一：
+			1.根据html5标准，table的直接子元素只能是tr,如果直接使用<row></row>组件来代替tr,渲染出来的每一行数据都不在table的直接子元素中。如下是错误的写法
+			<table border="0" cellspacing="0" cellpadding="0">
+				<row></row>
+			</table>
+			
+			2.正确的做法是使用is属性将组件渲染到tr上。如下是正确的写法
+		-->
+		<div id="root">
+			<table border="0" cellspacing="0" cellpadding="0">
+				<row></row>
+				<row></row>
+				<row></row>
+			</table>
+		</div>
+		
+		<script type="text/javascript">
+			Vue.component("row", {
+				template: '<tr>每一行的数据</tr>'
+			})
+			
+			var vm = new Vue({
+				el: "#root",
+				methods: {
+
+				}
+			})
+		</script>
+		
+		
+	</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="shortcut icon" type="" href="../img/favicon.ico"/>
+		<meta charset="UTF-8">
+		<title>4-7作用域插槽</title>
+		<script type="text/javascript" src="../js/vue.js"></script>
+	</head>
+	<body>
+		<div id="root">
+			<child-component>
+				<!--作用域插槽-->
+				<template scope="props">
+					<p>{{props.item}}</p>
+				</template>
+			</child-component>
+		</div>
+		
+		<script type="text/javascript">
+			
+			Vue.component("child-component", {
+				template: `\
+				<div class="state">\
+					<slot v-for="item in lists" :item="item"></slot>\
+				</div>`,
+				data: function() {
+					return {
+						lists: ["java", "css", "javascript", "html"]
+					}
+				}
+			})
+			
+			var vm = new Vue({
+				el: "#root",
+				methods: {
+					
+				}
+			})
+		</script>
+		
+		
+	</body>
+</html>
