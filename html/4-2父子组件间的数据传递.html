@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="../js/vue.js"></script>
+	</head>
+	<body>
+		<!-- 
+		一、父组件给子组件传值是通过属性进行的(分三步)
+		    1.父组件调用子组件的时候 绑定动态属性
+		        <v-header :title="title"></v-header>
+		
+		    2、在子组件里面通过 props接收父组件传过来的数据
+		        props:['title']
+		
+		        props:{
+		            'title':String      //指定数据类型
+		        }
+		
+		    3.直接在子组件里面使用即可。
+		-->
+		
+		<!--
+		父子组件是如何传值的？
+		父组件通过属性绑定进行传值
+		子组件通过触发事件向父组件传值
+		隐性规则：单向数据流，父组件可以向子组件传递任何数据，但子组件不能直接修改父组件传递进来的数据，如果一定要修改，那就复制一份副本出来再修改，
+		即不能直接修改props里面的属性值
+		-->
+		
+		<div id="root">
+			<div id="">
+				
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+			Vue.component("counter", {
+				template: '<div @click="handlerClick">求和: {{num}}</div>',
+				data () {
+					return {
+						num: 0
+					}
+				},
+				methods: {
+					handlerClick(){
+						this.num++;
+						this.$emit('change'); //触发change事件： (发布与订阅模式：父组件订阅了change事件)
+					}
+				}
+			})
+			
+			var vm = new Vue({
+				el: "#root",
+				data: {
+					total: 0
+				},
+				methods: {
+					getTotal () {
+						
+					}
+				}
+			})
+		</script>
+		
+	</body>
+</html>
