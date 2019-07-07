@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="../js/vue.js"></script>
+	</head>
+	<body>
+		<!-- 
+			细节点三：
+			1.父组件想使用子组件的数据时，可以通过ref拿到子组件的引用，通过引用就可以拿到子组件的数据了
+			2.如果ref属性直接在dom上声明，即是dom的引用  <div ref="divDom"></div>
+		-->
+		
+		<div id="root">
+			<counter @change="getTotal" ref="one"></counter><!-- 订阅了子组件的change事件 -->
+			<counter @change="getTotal" ref="two"></counter><!-- 订阅了子组件的change事件 -->
+			<div>总数： {{total}}</div>
+		</div>
+		
+		<script type="text/javascript">
+			Vue.component("counter", {
+				template: '<div @click="handlerClick">求和: {{num}}</div>',
+				data () {
+					return {
+						num: 0
+					}
+				},
+				methods: {
+					handlerClick(){
+						this.num++;
+						this.$emit('change'); //触发change事件： (发布与订阅模式：父组件订阅了change事件)
+					}
+				}
+			})
+			
+			var vm = new Vue({
+				el: "#root",
+				data: {
+					total: 0
+				},
+				methods: {
+					getTotal () {
+						this.total = (this.$refs.one.num + this.$refs.two.num);
+					}
+				}
+			})
+		</script>
+		
+	</body>
+</html>
