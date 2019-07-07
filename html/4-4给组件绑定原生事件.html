@@ -39,7 +39,8 @@
 		
 		<!-- 2.推荐的写法 -->
 		<div id="root">
-			<!--在子组件上通过@click绑定的事件是自定义事件-->
+			<!--在子组件上通过@click绑定的事件是  需要$emit触发的-->
+			<!--在子组件上通过@click.native 绑定的事件是 本地的，自动触发-->
 			<child-component @click.native="handlerClick"></child-component>
 		</div>
 		
