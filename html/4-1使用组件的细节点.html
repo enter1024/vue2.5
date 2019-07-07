@@ -15,22 +15,47 @@
 			</table>
 			
 			2.正确的做法是使用is属性将组件渲染到tr上。如下是正确的写法
+			<table border="0" cellspacing="0" cellpadding="0">
+				<tr is="row"></tr>
+			</table>
 		-->
+		
+		<!-- 
+			细节点二：
+			1.定义一个组件时，data对应的应该是一个函数，在函数内返回一个对象，在对象内定义需要的数据，这样做的目的是为了组件在重用时不会互相影响彼此的数据，
+			因为每次创建组件时都返回了一个独立的对象。如下：
+			data () {
+				return {
+					content: "我是内容"
+				}
+			}
+		-->
+		
+		<!-- 
+			细节点三：
+			1.父组件想使用子组件的数据时，可以通过ref拿到子组件的引用，通过引用就可以拿到子组件的数据了
+			案例请查看：   4-1使用组件的细节点2.html
+		-->
+		
 		<div id="root">
 			<table border="0" cellspacing="0" cellpadding="0">
-				<row></row>
-				<row></row>
-				<row></row>
+				<tr is="row" :text="content"></tr>
 			</table>
 		</div>
 		
 		<script type="text/javascript">
 			Vue.component("row", {
-				template: '<tr>每一行的数据</tr>'
+				template: '<tr>{{text}}</tr>',
+				props: ['text']
 			})
 			
 			var vm = new Vue({
 				el: "#root",
+				data () {
+					return {
+						content: "我是内容"
+					}
+				},
 				methods: {
 
 				}
