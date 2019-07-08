@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="../js/vue.js"></script>
+		<style type="text/css">
+			.active {
+				color: #00a7ff;
+			}
+		</style>
+	</head>
+	<body>
+		
+		<!-- 
+			总结：
+			1.动态绑定属性有四种值
+			2.以冒号跟一个属性开始的叫动态绑定属性，值可以是一个变量或表达式或一个对象或一个数组，如下:
+			<div :class="variable" @click="handlerClick">Hello World!</div>  //绑定一个变量
+			<div :class="{isActive === true ? active : ''}" @click="handlerClick">Hello World!</div>  //通过表达式绑定一个值
+			<div :class="{active: isActive}" @click="handlerClick">Hello World!</div>  //绑定一个对象
+			<div :class="[active, required]" @click="handlerClick">Hello World!</div>  //绑定一个数组
+			
+			3.动态属性绑定表达式通常会配合v-for遍历数据时使用， 通过三元表达式判断数据的某个变量，根据情况取不同的值
+		-->
+
+		<!--
+			案例1：
+			通过改变数据为元素动态添加一个类名，即驱动数据去改变元素是否添加某个类名
+		-->
+		<div id="root">
+			<div :class="[active, one]" @click="handlerClick">Hello World!</div>
+		</div>
+		
+		<script type="text/javascript">
+			var vm = new Vue({
+				el: "#root",
+				data () {
+					return {
+						variable: "vari",
+						active: "",
+						one: 'other-class'
+					}
+				},
+				methods: {
+					handlerClick() {
+						this.active = this.active === 'active' ? '' : 'active';
+					}
+				}
+			})
+		</script>
+		
+		
+	</body>
+</html>
