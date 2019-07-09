@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>子组件向父组件传递数据</title>
+		<script type="text/javascript" src="../js/vue.js"></script>
+		
+	</head>
+	<body>
+		<!--
+			案例：子组件向父组件传递数据
+			1.父组件向子组件传递数据是自然现象(单向数据流)
+			2.子向父组件传递数据使用$emit是其中的一种方法(事件触发，即订阅与发布模式)
+		-->
+		
+		
+		<div id="app">
+			<p>总和： {{ sun }}</p>
+			<button-counter :num="1" text="添加1" @click="clickChange"></button-counter>
+			<button-counter :num="10" text="添加10" @click="clickChange"></button-counter>
+		</div>
+		
+		<script type="text/javascript">
+			
+			Vue.component("button-counter", {
+				props: ['num', 'text'],
+				template: '<button @click="counter(num)">{{text}}</button>',
+				methods: {
+					counter: function(num) {
+						this.$emit('click', num);
+					}
+				}
+			})
+			
+			var app = new Vue({
+				el: '#app',
+				data: {
+					sun: 0
+				},
+				methods: {
+					clickChange: function(numb) {
+						console.log(numb);
+						console.log(typeof numb);
+						this.sun = this.sun + numb;
+					}
+				}
+			})
+		</script>
+	</body>
+</html>
