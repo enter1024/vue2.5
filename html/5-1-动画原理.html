@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>动画</title>
+		<style type="text/css">
+			/*类名会存在于整个动画过程，直至动画结束后移除*/
+			.fade-enter-active,
+			.fade-leave-active{
+				transition: opacity 2s; 
+			}
+			
+			/*从第一帧到第二帧的过程中，opacity从0变为1，transition监听到opacity的变化，会根据指定的时间内完成变化 */
+			.fade-enter {
+				opacity: 0; /*当第二帧时，会将fade-enter这个类移除，*/
+			}
+			
+			/*从第一帧到第二帧的过程中，opacity从1变为0*/
+			.fade-leave-to {
+				opacity: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<transition name="fade">
+				<div v-if="show">hello world</div>
+			</transition>
+			<button @click="handleClick()">点击我</button>
+		</div>
+	</body>
+	<script src="../js/vue.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		new Vue({
+			el: '#app',
+			data: {
+				show: true
+			},
+			methods: {
+				handleClick: function(){
+					this.show = this.show === true ? false : true;
+				}
+			}
+		})
+	</script>
+</html>
