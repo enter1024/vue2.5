@@ -3,14 +3,18 @@
 	<head>
 		<link rel="shortcut icon" href="img/favicon.ico"/>
 		<meta charset="utf-8" />
-		<title></title>
+		<title>vue实例化属性的先后顺序</title>
+		<script type="text/javascript" src="./js/vue.js"></script>
 	</head>
 	<body>
-		<script type="text/javascript">
-			console.log(foo, typeof foo);
-			var foo = 2;
-			function foo(){return 1;}
-			console.log(foo, typeof foo);
-		</script>
+		<div id="root">
+			
+			<div>{{message}}</div>
+			<div>{{getFullAddress}}</div>
+			<ul>
+				<li v-for="(item, index) in lists" @click="handlerClick(index)" :ref="index">{{item}}</li>
+			</ul>
+		</div>
 	</body>
+	<script type="text/javascript" src="js/vueInstance.js"></script>
 </html>
