@@ -1,5 +1,17 @@
+
+Vue.component("child", {
+	template: '<div>{{text}}</div>',
+	props: ['text'],
+	beforeCreate(){
+		console.log(this.text); // 不能拿到text
+	},
+	created() {
+		console.log(this.text); // 可以拿到text(子组件需要在创建实例之后才能拿到父组件传递过来的props数据)
+	}
+})
+
 // 一个vue实例的常用属性说明，最佳使用情况
-var v = new Vue({
+var vm = new Vue({
 	el: '#root',// 将实例挂载在id为root的元素上
 	
 	data: {
@@ -27,12 +39,12 @@ var v = new Vue({
 	 * 2.计算属性里面定义的函数名可以直接在html代码中使用，通过{{getFullAddress}}即可以显示结果
 	 * 3.计算属性里面的方法无需调用，所依赖的数据一旦改变，自动执行并返回或显示最新结果
 	 * 4.如果一个功能可以使用computed，watch，methods等方式实现，优先使用computed
-	 * 5.computed里面的函数会在实例化组件的beforeMount和mounted生命周期函数之间执行完成(mounted之前完成)。
+	 * 5.computed里面的函数会在实例化组件的beforeMount之后和mounted生命周期函数之前执行完成(mounted之前完成,此阶段数据和$el挂载完成)。
 	 * 当所依赖的数据再次发生变化时会再次执行
 	 */
 	computed: {
 		getFullAddress: function() {
-			console.log("getFullAddress");
+			console.log("getFullAddress-----------------");
 			return this.country + this.address; // 依赖的数据一旦改变自动执行该方法
 		}
 	},
@@ -42,6 +54,7 @@ var v = new Vue({
 		message: function(){
 			// message的值发生变化时会执行该函数
 			console.log("watch-message函数被执行！");
+			return "watch-----messages函数被执行";
 		}
 	},
 	
@@ -49,19 +62,21 @@ var v = new Vue({
  		console.log("beforeCreate","初始化vue实例前的一些准备");
  	},
  	created: function() {
- 		console.log(this);
+ 		// 此阶段已完成了数据的观测等，即data/methods/computed/watch已解析，可以被使用
  		console.log(this.$el);
- 		console.log("created","初始化vue实例已经完成，但还没有拿到根元素");
+ 		console.log("created","初始化vue实例已经完成，但还没有拿到根元素，即$el为undefined");
  	},
  	
  	beforeMount: function(){
  		// 已经拿到根元素，但是还没有和vue实例的数据结合
+ 		// 此阶段会将父组件使用子组件时动态绑定的数据传递给子组件（子组件在实例化后才能使用父组件传递过去的数据）
  		console.log(this.$el);
  		console.log("beforeMount","vue实例没有和根元素el挂载");
  	},
  	mounted: function() {
+ 		// 向子组件传递数据已完成
  		console.log(this.$el);
- 		console.log("mounted","vue实例已经和根元素el挂载完成");
+ 		console.log("mounted","vue实例已经和根元素el挂载完成,即完成数据的绑定");
  	},
  	
  	beforeUpdate:function(){
