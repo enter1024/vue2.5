@@ -24,16 +24,13 @@ var v = new Vue({
 	
 	/**
 	 * 1.计算属性(注重将结果返回)，计算属性有缓存
-	 * 2.计算属性里面定义的函数名可以直接在html代码中使用，通过{{sum}}即可以显示结果
+	 * 2.计算属性里面定义的函数名可以直接在html代码中使用，通过{{getFullAddress}}即可以显示结果
 	 * 3.计算属性里面的方法无需调用，所依赖的数据一旦改变，自动执行并返回或显示最新结果
 	 * 4.如果一个功能可以使用computed，watch，methods等方式实现，优先使用computed
-	 * 5.computed里面的函数会在实例化组件的beforeMount和mounted生命周期函数之间执行完成(mounted之前完成)
+	 * 5.computed里面的函数会在实例化组件的beforeMount和mounted生命周期函数之间执行完成(mounted之前完成)。
+	 * 当所依赖的数据再次发生变化时会再次执行
 	 */
 	computed: {
-		sum: function(num1,num2){
-			console.log("sum");
-			return num1+num2;
-		},
 		getFullAddress: function() {
 			console.log("getFullAddress");
 			return this.country + this.address; // 依赖的数据一旦改变自动执行该方法
@@ -92,3 +89,13 @@ var v = new Vue({
 // v-text
 // v-on:click="handlerFn"  为元素绑定点击时要执行的函数，绑定时不需要括号; 通常会使用@代替v-on, 如@click="handlerFn"
 // 
+
+// v-bind:title="message" (语法糖 :title="message")	将数据绑定到元素的title中，鼠标悬停到元素时才会显示message
+// v-if="seen"    控制元素的显示或隐藏，seen为true时显示/false时隐藏，隐藏后不占dom位置，相当于display:none;
+// v-for="(item, index) in items"    动态遍历生成元素
+
+
+/**
+ * 问题1：
+ * computed 和 watch 属性有什么区别？
+ */
