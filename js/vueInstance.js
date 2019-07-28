@@ -2,8 +2,14 @@
 Vue.component("child", {
 	template: '<div>{{text}}</div>',
 	props: ['text'],
+	data(){
+		return {
+			msg: '55'
+		}
+	},
 	beforeCreate(){
-		console.log(this.text); // 不能拿到text
+		console.log(this); // 不能拿到text
+//		console.log(this.text); // 不能拿到text
 	},
 	created() {
 		console.log(this.text); // 可以拿到text(子组件需要在创建实例之后才能拿到父组件传递过来的props数据)
@@ -74,7 +80,7 @@ var vm = new Vue({
  		console.log("beforeMount","vue实例没有和根元素el挂载");
  	},
  	mounted: function() {
- 		// 向子组件传递数据已完成
+ 		// 在此阶段执行之前已完成向子组件传递数据的动作
  		console.log(this.$el);
  		console.log("mounted","vue实例已经和根元素el挂载完成,即完成数据的绑定");
  	},
