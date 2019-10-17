@@ -19,7 +19,8 @@
 			<div :class="variable" @click="handlerClick">Hello World!</div>  //绑定一个变量
 			<div :class="{isActive === true ? active : ''}" @click="handlerClick">Hello World!</div>  //通过表达式绑定一个值
 			<div :class="{active: isActive}" @click="handlerClick">Hello World!</div>  //绑定一个对象
-			<div :class="[active, required]" @click="handlerClick">Hello World!</div>  //绑定一个数组
+			//绑定一个数组，每个元素都可以是一个变量，变量的值可以是任意合法的字符串
+			<div :class="[active, required]" @click="handlerClick">Hello World!</div>  
 			
 			3.动态属性绑定表达式通常会配合v-for遍历数据时使用， 通过三元表达式判断数据的某个变量，根据情况取不同的值
 		-->
