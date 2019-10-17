@@ -6,7 +6,8 @@
 		<script type="text/javascript" src="../js/vue.js"></script>
 	</head>
 	<body>
-		<!-- 1.不推荐的写法 -->
+		<!-- 1.通过先触发子组件内定义的方法，再触发父组件的方法。这种使用方式不推荐(除非需要子组件传递数据给父组件) -->
+		<!--在子组件上通过@click绑定的事件是  需要$emit触发的-->
 		<!--
 		<div id="root">
 			<child-component @click="handlerClick"></child-component>
@@ -39,20 +40,28 @@
 		
 		<!-- 2.推荐的写法 -->
 		<div id="root">
-			<!--在子组件上通过@click绑定的事件是  需要$emit触发的-->
+			
 			<!--在子组件上通过@click.native 绑定的事件是 本地的，自动触发-->
-			<child-component @click.native="handlerClick"></child-component>
+			<child-component @click.native="handlerClick('666',$event)"></child-component>
 		</div>
 		
 		<script type="text/javascript">
 			Vue.component("child-component", {
-				template: '<div>child-component</div>'
+				template: '<div>child-component</div>',
+				methods: {
+					handlerClick: function(){
+						alert('子组件的click事件不会被触发');
+					}
+				}
 			})
 			
 			var vm = new Vue({
 				el: "#root",
 				methods: {
-					handlerClick: function() {
+					handlerClick: function(message, event) {
+						console.log(message);
+						console.log(typeof message);
+						console.log(event);
 						alert('父组件自定义的click事件');
 					}
 				}
