@@ -3300,15 +3300,20 @@ function proxy (target, sourceKey, key) {
   Object.defineProperty(target, key, sharedPropertyDefinition);
 }
 
+/**
+ * 初始化状态
+ * 215页
+ * @param {Object} vm
+ */
 function initState (vm) {
-  vm._watchers = [];
+  vm._watchers = []; // 新增属性，保存当前组件的watcher实例
   var opts = vm.$options;
   if (opts.props) { initProps(vm, opts.props); }
   if (opts.methods) { initMethods(vm, opts.methods); }
   if (opts.data) {
     initData(vm);
   } else {
-    observe(vm._data = {}, true /* asRootData */);
+    observe(vm._data = {}, true /* asRootData */);// 观察空对象
   }
   if (opts.computed) { initComputed(vm, opts.computed); }
   if (opts.watch && opts.watch !== nativeWatch) {
