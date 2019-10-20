@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>跨组件通信(包括父子)</title>
+		<script src="../js/vue.js" type="text/javascript"></script>
+	</head>
+	<body>
+		<div id="app">
+			<div>
+				{{message}}
+			</div>
+			
+			<component-a></component-a>
+		</div>
+		
+		<script type="text/javascript">
+			var bus = new Vue(); // 中央事件总线
+			
+			Vue.component('component-a', {
+				template: '<button @click="handlerEvent">传递事件</button>',
+				methods: {
+					handlerEvent: function(){
+						bus.$emit('on-transmit',"组件component-a传递过来的内容");
+					}
+				}
+			});
+			
+			var vm = new Vue({
+				el: '#app',
+				data: {
+					message: "跨组件通信"
+				},
+				mounted: function (){
+					var _this = this;
+					bus.$on('on-transmit', function(res){
+						_this.message = res;
+					})
+				}
+			});
+		</script>
+	</body>
+</html>
